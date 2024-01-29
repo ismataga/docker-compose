@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   db:
     container_name: mysql
@@ -8,5 +8,26 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: ismat
       MYSQL_PASSWORD: secret
+    volumes:
+      - db:/var/lib/mysql
     ports:
-      - 3306:3306
+      - "3306:3306"
+
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: postgresql
+      POSTGRES_USER:
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbp:/var/lib/postgresql
+
+
+volumes:
+  db:
+  dbp:
