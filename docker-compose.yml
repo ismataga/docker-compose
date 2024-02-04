@@ -1,33 +1,53 @@
 version: '3.8'
 services:
-  db:
-    container_name: mysql
-    image: mysql:latest
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: ismat
-      MYSQL_PASSWORD: secret
-    volumes:
-      - db:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    mysql:
+      container_name: mysql
+#      hostname: test
+      image: mysql:latest
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_USER: ismat
+        MYSQL_PASSWORD: secret
+      volumes:
+        - db:/var/lib/mysql
+      ports:
+        - "3306:3306"
 
 
-  postgres:
-    container_name: postgres
-    image: postgres:latest
-    restart: always
-    environment:
-      POSTGRES_DB: postgresql
-      POSTGRES_USER:
-      POSTGRES_PASSWORD: root
-    ports:
-      - "5432:5432"
-    volumes:
-      - dbp:/var/lib/postgresql
+    postgres:
+#      hostname: test
+      image: postgres:latest
+      restart: always
+      environment:
+        POSTGRES_DB: postgresql
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: root
+      ports:
+        - "5432:5432"
+      volumes:
+        - dbp:/var/lib/postgresql
+#      networks:
+#        - custom-network
+
+
+    myapp:
+     image: msstudent:v22
+     ports:
+       - '8088:8088'
+#     networks:
+#       - custom-network
+     depends_on:
+       - postgres
+     environment:
+       HOST : postgres
+       PORT : 5432
+
 
 
 volumes:
   db:
   dbp:
+
+#networks:
+#  custom-network:
