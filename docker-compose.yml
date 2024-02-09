@@ -16,32 +16,31 @@ services:
 
 
     postgres:
-#      hostname: test
       image: postgres:latest
       restart: always
-      environment:
-        POSTGRES_DB: postgresql
-        POSTGRES_USER: root
-        POSTGRES_PASSWORD: root
       ports:
         - "5432:5432"
+      environment:
+        #        POSTGRES_DB: postgresql
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: root
       volumes:
-        - dbp:/var/lib/postgresql
+        - dbp:/var/lib/postgres/data
 #      networks:
 #        - custom-network
 
 
-    myapp:
-     image: msstudent:v22
-     ports:
-       - '8088:8088'
-#     networks:
-#       - custom-network
-     depends_on:
-       - postgres
-     environment:
-       HOST : postgres
-       PORT : 5432
+#    myapp:
+#     image: msstudent:v22
+#     ports:
+#       - '8088:8088'
+##     networks:
+##       - custom-network
+#     depends_on:
+#       - postgres
+#     environment:
+#       HOST : postgres
+#       PORT : 5432
 
 
 
